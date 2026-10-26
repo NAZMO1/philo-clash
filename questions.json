@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "quote": "On ne se baigne jamais deux fois dans le même fleuve.",
+    "author": "Héraclite",
+    "type": "Philosophe",
+    "choices": ["Héraclite", "Parménide", "Socrate", "Platon"],
+    "context": "Fragments, vers 500 av. J.-C.",
+    "mini_lesson": "Héraclite illustre ici le concept de devenir et de flux universel. Le monde est en perpétuel changement, tout comme nous qui ne cessons d'évoluer à chaque instant. Rien n'est figé dans le temps."
+  },
+  {
+    "id": 2,
+    "quote": "L'important, c'est pas la chute, c'est l'atterrissage.",
+    "author": "La Haine",
+    "type": "Film",
+    "choices": ["La Haine", "Les Misérables", "Ma 6-T va crack-er", "Banlieusards"],
+    "context": "Film de Mathieu Kassovitz, 1995",
+    "mini_lesson": "Cette parabole sur l'illusion du contrôle dénonce le déni d'une société face aux tensions destructrices. Tant que le drame ultime n'est pas survenu, on se persuade que tout va bien. La réplique souligne la fatalité de conséquences inévitables."
+  },
+  {
+    "id": 3,
+    "quote": "À force de vouloir être quelqu'un, on devient n'importe qui.",
+    "author": "Orelsan",
+    "type": "Rappeur",
+    "choices": ["Orelsan", "Nekfeu", "Gringe", "Disiz"],
+    "context": "Titre 'Notes pour trop tard', 2017",
+    "mini_lesson": "L'artiste met en garde contre la quête obsessionnelle de reconnaissance sociale et de validation extérieure. À trop vouloir copier les modèles imposés, on perd son individualité propre. L'authenticité réside dans l'acceptation de soi plutôt que dans le conformisme."
+  },
+  {
+    "id": 4,
+    "quote": "Je pense, donc je suis.",
+    "author": "René Descartes",
+    "type": "Philosophe",
+    "choices": ["René Descartes", "Baruch Spinoza", "John Locke", "Gottfried Leibniz"],
+    "context": "Discours de la méthode, 1637",
+    "mini_lesson": "En cherchant une certitude absolue à l'abri de tout doute, Descartes réalise qu'il ne peut douter de son propre acte de penser. Cette prise de conscience prouve de manière indéniable son existence en tant qu'être pensant. C'est le point de départ de la philosophie moderne du sujet."
+  },
+  {
+    "id": 5,
+    "quote": "Ce n'est pas ce que nous sommes à l'intérieur qui nous définit, ce sont nos actes.",
+    "author": "Batman Begins",
+    "type": "Film",
+    "choices": ["Batman Begins", "The Dark Knight", "Matrix", "Watchmen"],
+    "context": "Film de Christopher Nolan, 2005",
+    "mini_lesson": "Cette citation rappelle une vérité éthique fondamentale : les intentions et pensées nobles ne valent rien sans passage à l'action. Notre identité morale se construit concrètement à travers ce que nous faisons pour autrui. L'intériorité n'a de sens que si elle s'incarne dans le monde réel."
+  },
+  {
+    "id": 6,
+    "quote": "J'ai pas peur de la mort, j'ai peur de pas avoir assez vécu.",
+    "author": "Nekfeu",
+    "type": "Rappeur",
+    "choices": ["Nekfeu", "Alpha Wann", "Lomepal", "Dinos"],
+    "context": "Titre 'Égérie', 2015",
+    "mini_lesson": "Nekfeu formule une angoisse existentielle classique : ce n'est pas le trépas qui terrifie, mais le vide d'une existence inachevée. Cette idée fait écho à la tradition stoïcienne recommandant de vivre pleinement chaque jour. L'urgence d'exister intensément dépasse l'effroi de la finitude."
+  },
+  {
+    "id": 7,
+    "quote": "Ce qui ne me tue pas me rend plus fort.",
+    "author": "Friedrich Nietzsche",
+    "type": "Philosophe",
+    "choices": ["Friedrich Nietzsche", "Arthur Schopenhauer", "Karl Marx", "Søren Kierkegaard"],
+    "context": "Crépuscule des idoles, 1888",
+    "mini_lesson": "Nietzsche défend l'idée que les souffrances et les obstacles sont essentiels à l'élévation de l'individu. L'épreuve surmontée fortifie l'esprit et forge une volonté plus résiliente. La vie puise sa puissance créatrice dans sa capacité d'endurance."
+  },
+  {
+    "id": 8,
+    "quote": "L'espoir est une bonne chose, peut-être la meilleure des choses, et les bonnes choses ne meurent jamais.",
+    "author": "Les Évadés",
+    "type": "Film",
+    "choices": ["Les Évadés", "La Ligne verte", "Forrest Gump", "Le Cercle des poètes disparus"],
+    "context": "Film de Frank Darabont, 1994",
+    "mini_lesson": "Dans les conditions les plus aliénantes, l'espoir intérieur demeure le seul espace de liberté inaliénable. Il permet à l'esprit humain de résister au désespoir et à la résignation. C'est le moteur universel de toute survie et émancipation."
+  },
+  {
+    "id": 9,
+    "quote": "On passe la moitié de sa vie à attendre ceux qu'on aimera et la seconde moitié à quitter ceux qu'on aime.",
+    "author": "Oxmo Puccino",
+    "type": "Rappeur",
+    "choices": ["Oxmo Puccino", "Kery James", "Abd al Malik", "MC Solaar"],
+    "context": "Titre 'L'Amour est mort', 2001",
+    "mini_lesson": "Oxmo Puccino résume avec mélancolie la temporalité tragique des relations affectives humaines. L'attente idéalisée succède inévitablement à l'épreuve du deuil et de la rupture. La phrase souligne la vulnérabilité constante de l'attachement."
+  },
+  {
+    "id": 10,
+    "quote": "L'homme est condamné à être libre.",
+    "author": "Jean-Paul Sartre",
+    "type": "Philosophe",
+    "choices": ["Jean-Paul Sartre", "Albert Camus", "Michel Foucault", "Simone de Beauvoir"],
+    "context": "L'existentialisme est un humanisme, 1946",
+    "mini_lesson": "Pour Sartre, l'absence de déterminisme divin ou de nature humaine prédéfinie force l'individu à faire des choix permanents. Cette liberté totale implique une responsabilité écrasante car chacun est l'unique auteur de ses actes. On ne peut échapper à sa propre responsabilité."
+  },
+  {
+    "id": 11,
+    "quote": "C'est seulement quand on a tout perdu qu'on est libre de faire tout ce qu'on veut.",
+    "author": "Fight Club",
+    "type": "Film",
+    "choices": ["Fight Club", "American Psycho", "Usual Suspects", "Pulp Fiction"],
+    "context": "Film de David Fincher, 1999",
+    "mini_lesson": "Le film critique l'aliénation matérialiste et le carcan des conventions qui entravent l'émancipation de l'individu. Le détachement total des possessions superflues est présenté comme une condition d'affranchissement psychologique. C'est une apologie subversive du dépouillement radical."
+  },
+  {
+    "id": 12,
+    "quote": "On s'habitue à tout, même au pire, surtout au pire.",
+    "author": "Damso",
+    "type": "Rappeur",
+    "choices": ["Damso", "Booba", "Kaaris", "Niska"],
+    "context": "Titre 'Amnésie', 2016",
+    "mini_lesson": "Damso met en lumière la banalisation de la violence morale et la faculté humaine d'accoutumance au traumatisme. L'esprit développe des mécanismes d'adaptation qui finissent par anesthésier la douleur et le discernement éthique. Cette résignation inconsciente constitue un piège psychologique redoutable."
+  },
+  {
+    "id": 13,
+    "quote": "Connais-toi toi-même.",
+    "author": "Socrate",
+    "type": "Philosophe",
+    "choices": ["Socrate", "Aristote", "Épicure", "Diogène"],
+    "context": "Précepte delphique repris dans les Dialogues de Platon",
+    "mini_lesson": "Socrate invite chacun à examiner lucidement son âme, ses préjugés et les limites de son savoir. L'introspection rigoureuse est le préalable indispensable à toute quête de sagesse et de vertu. Sans connaissance de soi, aucune véritable philosophie n'est possible."
+  },
+  {
+    "id": 14,
+    "quote": "Fais-le ou ne le fais pas. Il n'y a pas d'essai.",
+    "author": "Star Wars : L'Empire contre-attaque",
+    "type": "Film",
+    "choices": ["Star Wars : L'Empire contre-attaque", "Le Seigneur des anneaux", "Matrix", "Dune"],
+    "context": "Film d'Irvin Kershner, 1980",
+    "mini_lesson": "À travers Yoda, cette réplique prône l'engagement sans réserve et la certitude intérieure face au doute paralysant. 'Essayer' présuppose l'éventualité de l'abandon, alors que la volonté pure exige un alignement complet de l'action et de l'esprit. La demi-mesure affaiblit la détermination."
+  },
+  {
+    "id": 15,
+    "quote": "On vit pour une étincelle au milieu de la nuit.",
+    "author": "Shurik'n",
+    "type": "Rappeur",
+    "choices": ["Shurik'n", "Akhenaton", "MC Solaar", "Kool Shen"],
+    "context": "Album 'Où je vis', titre 'Samouraï', 1998",
+    "mini_lesson": "Cette punchline métaphorique décrit l'existence comme un bref éclair d'intensité au sein de l'obscurité du monde. Elle incite à chercher un sens profond et des instants de grâce malgré la dureté du quotidien. La beauté réside dans la brièveté et l'éclat de nos combats intimes."
+  }
+]

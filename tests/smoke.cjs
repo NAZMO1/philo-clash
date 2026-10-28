@@ -1,0 +1,60 @@
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+(async () => {
+ const browser = await chromium.launch({headless:true});
+ const page = await browser.newPage();
+ const errors = []; page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://localhost:8000');
+ await page.waitForFunction(()=>!document.querySelector('[data-mode]').disabled);
+ for (const mode of ['clash','concept','dilemma']) {
+  await page.locator(`[data-mode="${mode}"]`).click();
+  const total = mode === 'dilemma' ? 5 : 8;
+  for (let i=0;i<total;i++) {
+   assert.equal(await page.locator('#lesson').isVisible(),false);
+   assert.equal(await page.locator('#clock').isVisible(),false);
+   await page.locator(mode === 'dilemma' ? '.choice' : '.choice[data-correct="true"]').first().click();
+   assert.equal(await page.locator('#lesson').isVisible(),true);
+   assert.equal(await page.locator('.choice:enabled').count(),0);
+   assert.ok((await page.locator('#nuance').textContent()).length>10);
+   await page.locator('#next').click();
+  }
+  assert.equal(await page.locator('#recap article').count(),total);
+  if(mode !== 'dilemma') assert.match(await page.locator('#result-title').textContent(),/8 \/ 8/);
+  await page.locator('#replay').click();
+  assert.equal(await page.locator('#game').isVisible(),true);
+  await page.locator('#home-button').click();
+ }
+ await page.clock.install();
+ await page.locator('#timed').check();
+ await page.locator('[data-mode="concept"]').click();
+ await page.clock.fastForward(21000);
+ assert.match(await page.locator('#answer-status').textContent(),/Temps écoulé/);
+ assert.equal(await page.locator('#score').textContent(),'Score : 0');
+ await page.locator('#next').click();
+ await page.locator('.choice[data-correct="false"]').first().click();
+ assert.equal(await page.locator('.choice.wrong').count(),1);
+ await page.locator('#home-button').click();
+ await page.clock.fastForward(30000);
+ assert.equal(await page.locator('#home').isVisible(),true);
+ await page.locator('[data-mode="dilemma"]').click();
+ assert.equal(await page.locator('#clock').isVisible(),false);
+ await page.locator('#home-button').click();
+ await page.setViewportSize({width:375,height:812});
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true);
+ await page.locator('[data-mode="concept"]').click();
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth),true);
+ await page.screenshot({path:'/tmp/philo-mobile.png',fullPage:true});
+ const failure = await browser.newPage();
+ await failure.route('**/questions.json',route=>route.fulfill({status:500,body:'error'}));
+ await failure.goto('http://localhost:8000');
+ await failure.locator('#retry').waitFor({state:'visible'});
+ assert.equal(await failure.locator('[data-mode]:disabled').count(),3);
+ await failure.unroute('**/questions.json');
+ await failure.locator('#retry').click();
+ await failure.waitForFunction(()=>!document.querySelector('[data-mode]').disabled);
+ await page.setViewportSize({width:1440,height:1000});
+ await page.locator('#home-button').click();
+ await page.screenshot({path:'/tmp/philo-desktop.png',fullPage:true});
+ assert.deepEqual(errors,[]);
+ await browser.close(); console.log('PASS: three complete modes, replay, wrong answer, timeout, exit, mobile, fetch recovery, no JS errors');
+})().catch(e=>{console.error(e);process.exit(1)});

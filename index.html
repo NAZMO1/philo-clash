@@ -54,6 +54,9 @@
         return response.json();
       })
       .then(data => {
+        if (!Array.isArray(data) || data.length === 0) {
+          throw new Error("Aucune question disponible");
+        }
         questions = data;
         startGame();
       })
@@ -111,6 +114,7 @@
 
     function validateAnswer(selectedChoice) {
       clearInterval(timerInterval);
+      if (!lessonCard.classList.contains('hidden')) return;
       const q = questions[currentIndex];
       const buttons = document.querySelectorAll('.choice-btn');
 

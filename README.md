@@ -1,87 +1,45 @@
-# ⚡ PhiloClash — Philosophie × Pop Culture
+# PhiloClash — Philosophie × Pop culture
 
-**Quiz de citations : philosophie, rap et cinéma, avec 12 secondes pour répondre.**
+Un jeu en français pour découvrir des concepts philosophiques à partir de Matrix, Naruto, One Piece, Soul, Spider-Man, Animal Crossing et d’autres œuvres.
 
-[![Jouer en ligne](https://img.shields.io/badge/▶-Jouer_à_PhiloClash-22c55e?style=for-the-badge)](https://NAZMO1.github.io/philo-clash/) ![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?logo=javascript&logoColor=black) ![Tailwind](https://img.shields.io/badge/Tailwind-CSS-06B6D4?logo=tailwindcss&logoColor=white) [![MIT](https://img.shields.io/badge/Licence-MIT-blue)](LICENSE)
+[Jouer sur GitHub Pages](https://NAZMO1.github.io/philo-clash/)
 
-*Une citation : est-ce un philosophe, un artiste ou une réplique de cinéma ?*
+## Trois modes
 
-**PhiloClash** met en relation des idées philosophiques et des références culturelles contemporaines dans un jeu web court et interactif. Chaque question se termine par une explication permettant d'aller au-delà de la bonne réponse.
+- **Qui pense quoi ?** : huit questions alternant penseur, œuvre et idée commune. Les propositions mêlent philosophie et pop culture.
+- **Le concept caché** : huit scènes à relier à un concept philosophique.
+- **À ta place…** : cinq dilemmes sans bonne ou mauvaise réponse, suivis de pistes de discussion.
 
-### [▶ Essayer la démo en ligne](https://NAZMO1.github.io/philo-clash/)
+Chaque manche propose un lien œuvre/penseur, une nuance, une question du quotidien et un repère bibliographique. Le bilan reprend les concepts explorés. Questions et réponses sont mélangées ; un chrono facultatif de 20 secondes est disponible dans les deux quiz. Les explications restent lisibles sans limite de temps.
 
-## 🎯 Fonctionnalités
+## Contenu éditorial
 
-- Questions à **choix multiples** alimentées par un fichier JSON.
-- **Chronomètre de 12 secondes** et jauge visuelle qui devient rouge en fin de temps.
-- **Score et progression** mis à jour au fil du jeu.
-- Retour immédiat indiquant la bonne réponse, le contexte et une **mini-leçon**.
-- Résultat final et bouton **Rejouer**.
-- Interface responsive avec **Tailwind CSS**, sans framework JavaScript.
+Les scènes et idées sont **reformulées**, sans prétendre citer les œuvres. Les rapprochements sont des propositions de lecture, pas des preuves d’influence. Le fichier `questions.json` contient huit passerelles, chacune avec sa référence philosophique et les limites du parallèle. Les anciennes citations et paroles à attribution incertaine ont été remplacées. Les dilemmes invitent à argumenter plutôt qu’à évaluer une personnalité.
 
-## 🕹️ Comment jouer ?
-
-1. Lire la citation affichée.
-2. Choisir son auteur ou son œuvre parmi les propositions avant l'expiration du chronomètre.
-3. Consulter la fiche explicative après la validation.
-4. Continuer jusqu'au score final, puis rejouer.
-
-## 🛠️ Stack et architecture
-
-| Élément | Technologie | Utilisation |
-| --- | --- | --- |
-| Interface | HTML5 | Structure de l'application |
-| Logique | JavaScript natif | État, score, minuteur et interactions |
-| Design | Tailwind CSS via CDN | Styles et mise en page |
-| Données | `questions.json` | Citations, réponses et explications |
-| Hébergement | GitHub Pages | Application web statique |
-
-Le navigateur charge `questions.json` via `fetch`, génère les boutons de réponse puis met à jour l'interface à partir des variables d'état du jeu. Aucun serveur applicatif ni base de données n'est nécessaire.
-
-## 🚀 Exécution locale
+## Lancer en local
 
 ```bash
-git clone https://github.com/NAZMO1/philo-clash.git
-cd philo-clash
 python -m http.server 8000
 ```
 
-Ouvrir **http://localhost:8000**.
+Ouvrir http://localhost:8000. Aucun build, compte ou service externe n’est nécessaire. Les styles sont locaux ; un serveur HTTP permet de charger les données JSON.
 
-Un petit serveur HTTP évite les restrictions de lecture locale de `questions.json` avec `file://`. Une connexion internet est nécessaire pour charger Tailwind depuis son CDN.
+## Structure
 
-## 📁 Structure du projet
+- `index.html` : accueil, partie et bilan, structure accessible.
+- `style.css` : identité visuelle, responsive et prise en compte de la réduction des animations.
+- `app.js` : chargement avec possibilité de réessayer, mélange, modes, score et chrono.
+- `questions.json` : scènes, idées, concepts, références, nuances et dilemmes.
+- `tests/smoke.cjs` : tests navigateur des parcours et des cas limites (Playwright).
 
-```text
-philo-clash/
-├── index.html        # Interface, styles et logique JavaScript
-├── questions.json    # Citations, propositions et mini-leçons
-├── LICENSE           # Licence MIT
-└── README.md
+## Vérification
+
+Avec Node.js et Playwright installés, lancer le serveur sur le port 8000, puis :
+
+```bash
+node tests/smoke.cjs
 ```
 
-## 📝 Structure des données
+Le test parcourt les trois modes, vérifie le bilan, le chrono, le retour à l’accueil, les erreurs de chargement et l’affichage mobile.
 
-Le tableau `questions.json` utilise les champs `id`, `quote`, `author`, `type`, `choices`, `context` et `mini_lesson`. Pour ajouter une question, respecter ces champs et inclure la réponse `author` dans les `choices`.
-
-Les questions sont actuellement jouées **dans l'ordre du fichier**, sans tirage aléatoire. Le contenu éditorial peut être préparé avec des outils d'IA, mais les citations et leurs attributions doivent être **vérifiées humainement** avant toute utilisation comme source fiable.
-
-## 💡 Compétences mises en pratique
-
-Manipulation du DOM, programmation événementielle, gestion d'état en JavaScript, temporisation, données structurées en JSON et réalisation d'une interface responsive pour un site statique.
-
-## 🛣️ Améliorations envisagées
-
-- [ ] Mélanger les questions et les choix à chaque partie.
-- [ ] Ajouter des catégories, des niveaux et un mode sans chronomètre.
-- [ ] Documenter et vérifier les sources de toutes les citations.
-- [ ] Améliorer l'accessibilité et ajouter des tests.
-- [ ] Ajouter des captures d'écran et une courte vidéo de démonstration.
-
-## 📄 Licence
-
-Code publié sous licence [MIT](LICENSE). Les droits éventuels sur les citations et œuvres évoquées sont distincts de la licence du code.
-
----
-
-**Projet personnel mêlant développement web, philosophie et culture populaire.**
+Code sous licence MIT. Les œuvres évoquées restent la propriété de leurs ayants droit.

@@ -1,159 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PhiloClash</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101019"><meta name="description" content="De Matrix à Naruto : découvre la philosophie cachée dans la pop culture. Trois modes de jeu, des explications accessibles et des dilemmes.">
+<title>PhiloClash — Les idées sortent de l’écran</title>
+<link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4 font-sans">
-  <main class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-    <div class="w-full bg-slate-800 h-2 rounded-full mb-6 overflow-hidden">
-      <div id="timer-bar" class="bg-amber-400 h-full w-full transition-all duration-100 ease-linear"></div>
-    </div>
-    <div class="flex justify-between items-center text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">
-      <span id="question-progress">Question 1/15</span>
-      <span id="score-display">Score : 0</span>
-    </div>
-    <div class="min-h-[140px] flex items-center justify-center text-center p-4 bg-slate-950/60 rounded-xl border border-slate-800/80 mb-6">
-      <p id="quote-text" class="text-lg font-medium leading-relaxed italic text-slate-200">Chargement...</p>
-    </div>
-    <div id="choices-container" class="grid grid-cols-1 gap-3 mb-6"></div>
-    <div id="lesson-card" class="hidden bg-slate-800/90 border border-amber-500/30 rounded-xl p-4 mb-4">
-      <div id="answer-status" class="font-bold text-sm mb-1"></div>
-      <p id="quote-context" class="text-xs text-amber-400/90 font-mono mb-2"></p>
-      <p id="lesson-text" class="text-xs text-slate-300 leading-relaxed"></p>
-      <button id="next-btn" class="w-full mt-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-sm transition">
-        Question suivante
-      </button>
-    </div>
-  </main>
-
-  <script>
-    let questions = [];
-    let currentIndex = 0;
-    let score = 0;
-    let timerInterval = null;
-    let timeLeft = 12;
-    const TOTAL_TIME = 12;
-
-    const quoteText = document.getElementById('quote-text');
-    const choicesContainer = document.getElementById('choices-container');
-    const questionProgress = document.getElementById('question-progress');
-    const scoreDisplay = document.getElementById('score-display');
-    const timerBar = document.getElementById('timer-bar');
-    const lessonCard = document.getElementById('lesson-card');
-    const answerStatus = document.getElementById('answer-status');
-    const quoteContext = document.getElementById('quote-context');
-    const lessonText = document.getElementById('lesson-text');
-    const nextBtn = document.getElementById('next-btn');
-
-    fetch('./questions.json')
-      .then(response => {
-        if (!response.ok) throw new Error("Erreur");
-        return response.json();
-      })
-      .then(data => {
-        if (!Array.isArray(data) || data.length === 0) {
-          throw new Error("Aucune question disponible");
-        }
-        questions = data;
-        startGame();
-      })
-      .catch(err => {
-        quoteText.textContent = "Erreur : questions.json introuvable.";
-      });
-
-    function startGame() {
-      currentIndex = 0;
-      score = 0;
-      loadQuestion();
-    }
-
-    function loadQuestion() {
-      clearInterval(timerInterval);
-      lessonCard.classList.add('hidden');
-      choicesContainer.innerHTML = '';
-      
-      const q = questions[currentIndex];
-      questionProgress.textContent = `Question ${currentIndex + 1}/${questions.length}`;
-      scoreDisplay.textContent = `Score : ${score}`;
-      quoteText.textContent = `« ${q.quote} »`;
-
-      q.choices.forEach(choice => {
-        const btn = document.createElement('button');
-        btn.className = "choice-btn w-full py-3 px-4 bg-slate-800 hover:bg-slate-700 active:scale-[0.99] border border-slate-700/60 rounded-xl text-left font-medium text-sm transition text-slate-200";
-        btn.textContent = choice;
-        btn.onclick = () => validateAnswer(choice);
-        choicesContainer.appendChild(btn);
-      });
-
-      startTimer();
-    }
-
-    function startTimer() {
-      timeLeft = TOTAL_TIME;
-      timerBar.style.width = '100%';
-      timerBar.classList.replace('bg-rose-500', 'bg-amber-400');
-
-      timerInterval = setInterval(() => {
-        timeLeft -= 0.1;
-        const pct = Math.max(0, (timeLeft / TOTAL_TIME) * 100);
-        timerBar.style.width = `${pct}%`;
-
-        if (timeLeft <= 3.5) {
-          timerBar.classList.replace('bg-amber-400', 'bg-rose-500');
-        }
-
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          validateAnswer(null);
-        }
-      }, 100);
-    }
-
-    function validateAnswer(selectedChoice) {
-      clearInterval(timerInterval);
-      if (!lessonCard.classList.contains('hidden')) return;
-      const q = questions[currentIndex];
-      const buttons = document.querySelectorAll('.choice-btn');
-
-      buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === q.author) {
-          btn.classList.add('!bg-emerald-600', '!border-emerald-500', 'text-white');
-        } else if (btn.textContent === selectedChoice) {
-          btn.classList.add('!bg-rose-600', '!border-rose-500', 'text-white');
-        }
-      });
-
-      const isCorrect = (selectedChoice === q.author);
-      if (isCorrect) score += 1;
-
-      answerStatus.textContent = isCorrect ? "Exact !" : (selectedChoice ? "Raté !" : "Temps écoulé !");
-      answerStatus.className = `font-bold text-sm mb-1 ${isCorrect ? 'text-emerald-400' : 'text-rose-400'}`;
-      quoteContext.textContent = `${q.author} — ${q.context}`;
-      lessonText.textContent = q.mini_lesson;
-
-      lessonCard.classList.remove('hidden');
-    }
-
-    nextBtn.onclick = () => {
-      currentIndex++;
-      if (currentIndex < questions.length) {
-        loadQuestion();
-      } else {
-        quoteText.textContent = `Partie terminée ! Score : ${score} / ${questions.length}`;
-        choicesContainer.innerHTML = '';
-        lessonCard.classList.add('hidden');
-        timerBar.style.width = '0%';
-        const restartBtn = document.createElement('button');
-        restartBtn.className = "w-full py-3 bg-amber-500 text-slate-950 font-bold rounded-xl mt-4";
-        restartBtn.textContent = "Rejouer";
-        restartBtn.onclick = startGame;
-        choicesContainer.appendChild(restartBtn);
-      }
-    };
-  </script>
-</body>
-</html>
+<body>
+<header class="topbar"><a href="./" class="brand" aria-label="PhiloClash, accueil">philo<span>clash</span><b>✳</b></a><span class="edition">LA PHILO A CHANGÉ DE TERRAIN</span><button id="home-button" class="quiet" hidden>Quitter la partie</button></header>
+<main>
+<section id="home">
+ <div class="hero"><div><p class="eyebrow">PHILOSOPHIE × POP CULTURE</p><h1>Tu connais les œuvres.<br><em>Découvre les idées.</em></h1><p class="intro">Matrix, Naruto, Spider-Man… Derrière les histoires que tu aimes, il y a des questions qui nous concernent tous.</p><a href="#modes" class="primary link-button">Choisir mon mode <span>↘</span></a><p class="micro">Gratuit · Sans compte · Une idée à emporter à chaque manche</p></div><div class="poster" aria-label="Matrix rencontre Platon, apparence et réalité"><div class="poster-top">LE MATCH DU JOUR <span>01 / 08</span></div><div class="versus"><span>MATRIX</span><i>rencontre</i><span>PLATON</span></div><div class="poster-bottom"><span>APPARENCE & RÉALITÉ</span><p>Et si ton monde n’était<br>qu’une illusion ?</p><div class="pills"><span>Cinéma</span><span>Philosophie</span></div></div><span class="orbit" aria-hidden="true">✳</span></div></div>
+ <div class="ticker" aria-hidden="true">CINÉMA <b>✳</b> ANIME <b>✳</b> JEUX VIDÉO <b>✳</b> GRANDES QUESTIONS <b>✳</b> VIE QUOTIDIENNE</div>
+ <div class="section-heading" id="modes"><div><p class="eyebrow">À TOI DE JOUER</p><h2>Trois façons de faire le lien.</h2></div><span>Pas besoin d’avoir lu Kant.</span></div>
+ <div class="modes"><button class="mode" data-mode="clash" disabled><span class="mode-number">01 <b>↗</b></span><span class="mode-icon">↔</span><h3>Qui pense quoi ?</h3><p>Une idée, quatre origines possibles. Philosophie, pop culture… ou les deux ?</p><span class="mode-footer">8 questions · Origines <strong>Jouer →</strong></span></button><button class="mode featured" data-mode="concept" disabled><span class="mode-number">02 <b>↗</b></span><span class="mode-icon">✳</span><h3>Le concept caché</h3><p>Pars d’une scène culte et retrouve la question philosophique qu’elle soulève.</p><span class="mode-footer">8 questions · Connexions <strong>Jouer →</strong></span></button><button class="mode" data-mode="dilemma" disabled><span class="mode-number">03 <b>↗</b></span><span class="mode-icon">⚖</span><h3>À ta place…</h3><p>Choisis face à un dilemme. Explore ce que ta réponse met en jeu, sans bonne ou mauvaise note.</p><span class="mode-footer">5 dilemmes · Réflexion <strong>Explorer →</strong></span></button></div>
+ <div class="settings"><label><input type="checkbox" id="timed"> Activer le chrono : 20 s par question</label><span>Les dilemmes restent sans chrono.</span></div><p id="load-status" role="status">Chargement des idées…</p><button id="retry" class="quiet" hidden>Réessayer le chargement</button>
+ <section class="manifesto"><span>“</span><div><h2>La philo est déjà dans ta vie.</h2><p>Le jeu ne cherche pas à prouver que chaque œuvre illustre parfaitement un philosophe. Il t’invite à faire des rapprochements, à voir leurs limites, et à poser tes propres questions.</p></div></section>
+</section>
+<section id="game" hidden aria-labelledby="game-title"><div class="game-top"><span id="mode-label" class="eyebrow"></span><span id="progress"></span><span id="score"></span></div><div class="progress-track"><div id="progress-bar"></div></div><div id="clock" hidden><span id="time-label"></span><div class="timer-track"><div id="timer-bar"></div></div></div><div class="question-card"><span id="question-tag" class="tag"></span><h1 id="game-title" tabindex="-1"></h1><p id="prompt"></p></div><div id="choices" class="choices"></div><section id="lesson" class="lesson" hidden aria-labelledby="answer-status"><p id="answer-status" role="status"></p><h2 id="connection"></h2><p id="bridge"></p><div class="nuance"><b>Le lien a ses limites</b><p id="nuance"></p></div><div class="daily"><b>Et dans ta vie ?</b><p id="daily"></p></div><details><summary>Repère pour aller plus loin</summary><p id="reference"></p><small>Scènes et idées reformulées pour le jeu ; les rapprochements sont des interprétations, pas des citations ni des preuves d’influence.</small></details><button id="next" class="primary">Continuer →</button></section></section>
+<section id="result" hidden><p class="eyebrow">FIN DE PARTIE · DÉBUT DE LA RÉFLEXION</p><h1 id="result-title" tabindex="-1"></h1><p id="result-description"></p><div id="recap" class="recap"></div><div class="result-actions"><button id="replay" class="primary">Rejouer ce mode ↗</button><button id="other-mode" class="quiet">Changer de mode</button></div></section>
+</main><footer><a href="./" class="brand">philo<span>clash</span></a><p>Des références familières. Des questions qui restent.</p><span>Penser, ça se joue aussi.</span></footer>
+</body></html>
